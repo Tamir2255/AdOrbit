@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdOrbit — Advertising That Reaches Everywhere</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { orange: '#FF5A00', green: '#00B25C', dark: '#0F172A' } }, fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans antialiased">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="index.html"><img src="assets/logo.svg" alt="AdOrbit" class="h-9"></a>
+            <button id="auth-nav-btn" onclick="toggleAuthModal('login')" class="bg-brand-dark hover:bg-slate-800 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition-all">Sign In</button>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        <section class="py-20 lg:py-28 bg-white text-center">
+            <div class="max-w-3xl mx-auto px-4 space-y-6">
+                <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-orange/10 text-brand-orange uppercase tracking-wider">🌍 Reach Any Country, Continent, or the Whole World</span>
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1]">Launch a Campaign in Minutes. Pay Once. Reach Real People.</h1>
+                <p class="text-lg text-slate-500 max-w-xl mx-auto">Choose your niche, pick a video, banner, post, or classified format, and either upload your own creative or let our team make one for you.</p>
+                <button onclick="toggleAuthModal('register')" class="px-8 py-4 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg transition-all">Create Free Account</button>
+            </div>
+        </section>
+
+        <section class="py-16 bg-slate-100 border-y border-slate-200/60">
+            <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-6 text-left">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">🎯 Any Niche, Any Reach</h3>
+                    <p class="text-slate-500 text-sm">Pick your business category and target a single country, a continent, or the whole world.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">🎬 Bring Your Own or Let Us Create</h3>
+                    <p class="text-slate-500 text-sm">Upload your creative, or describe your product and our team will build the video or post for you.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">💳 Pay Once, No Wallet Games</h3>
+                    <p class="text-slate-500 text-sm">Instant mobile money checkout in your local currency — or USD/EUR.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+                    <h3 class="text-lg font-bold mb-2">✅ Approve Before It Goes Live</h3>
+                    <p class="text-slate-500 text-sm">If we create your content, you review and approve it before it reaches a single viewer.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl relative border border-slate-100">
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div id="auth-login-view" class="space-y-6">
+                <h3 class="text-2xl font-extrabold">Sign In</h3>
+                <form id="login-form" class="space-y-4" onsubmit="handleAuthSubmit(event, 'login')">
+                    <input type="email" id="login-email" placeholder="Email Address" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="password" id="login-password" placeholder="Password" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <button type="submit" class="w-full h-12 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg">Sign In</button>
+                </form>
+                <div class="text-sm text-slate-500 text-center">Don't have an account? <button onclick="toggleAuthModal('register')" class="text-brand-orange font-bold">Register here</button></div>
+            </div>
+            <div id="auth-register-view" class="space-y-6 hidden">
+                <h3 class="text-2xl font-extrabold">Create Account</h3>
+                <form id="register-form" class="space-y-4" onsubmit="handleAuthSubmit(event, 'register')">
+                    <input type="text" id="register-username" placeholder="Username" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="email" id="register-email" placeholder="Email Address" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="password" id="register-password" placeholder="Password (min 8 characters)" required minlength="8" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="hidden" id="register-role" value="advertiser">
+                    <button type="submit" class="w-full h-12 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg">Register Account</button>
+                </form>
+                <div class="text-sm text-slate-500 text-center">Already have an account? <button onclick="toggleAuthModal('login')" class="text-brand-orange font-bold">Sign In here</button></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-100 border-t border-slate-200/60 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-sm"><p>&copy; 2026 AdOrbit. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        // This frontend (Vercel) and the API (Render) are different domains —
+        // calls must point at the full Render URL explicitly.
+        const API_BASE_URL = 'https://adorbit-backend.onrender.com'; // <-- replace with your real Render service URL
+
+        function toggleAuthModal(mode) {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            document.getElementById('auth-login-view').classList.toggle('hidden', mode !== 'login');
+            document.getElementById('auth-register-view').classList.toggle('hidden', mode !== 'register');
+        }
+        function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+
+        async function handleAuthSubmit(event, endpoint) {
+            event.preventDefault();
+            const bodyData = {};
+            if (endpoint === 'login') {
+                bodyData.email = document.getElementById('login-email').value;
+                bodyData.password = document.getElementById('login-password').value;
+            } else {
+                bodyData.username = document.getElementById('register-username').value;
+                bodyData.email = document.getElementById('register-email').value;
+                bodyData.password = document.getElementById('register-password').value;
+                bodyData.role = document.getElementById('register-role').value;
+            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/auth/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bodyData)
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    if (endpoint === 'login') {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        alert('Registration successful! Please sign in.');
+                        toggleAuthModal('login');
+                    }
+                } else {
+                    alert(data.error || 'Authentication error.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection to auth servers failed.');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('token')) {
+                const btn = document.getElementById('auth-nav-btn');
+                btn.setAttribute('onclick', "window.location.href='dashboard.html'");
+                btn.innerText = 'Go to Dashboard';
+            }
+        });
+    </script>
+</body>
+</html>
