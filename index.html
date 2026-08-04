@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdOrbit — Advertising That Reaches Everywhere</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { orange: '#FF5A00', green: '#00B25C', dark: '#0F172A' } }, fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        .orbit-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(255,90,0,0.15); }
+        .glow { background: radial-gradient(circle at 30% 20%, rgba(255,90,0,0.15), transparent 60%); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans antialiased">
+
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="index.html"><img src="assets/logo.svg" alt="AdOrbit" class="h-9"></a>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                <a href="#how-it-works" class="hover:text-brand-orange transition-colors">How It Works</a>
+                <a href="#formats" class="hover:text-brand-orange transition-colors">Ad Formats</a>
+                <a href="#pricing" class="hover:text-brand-orange transition-colors">Pricing</a>
+                <a href="#faq" class="hover:text-brand-orange transition-colors">FAQ</a>
+            </nav>
+            <button id="auth-nav-btn" onclick="toggleAuthModal('login')" class="bg-brand-dark hover:bg-slate-800 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md transition-all">Sign In</button>
+        </div>
+    </header>
+
+    <main class="flex-1">
+
+        <!-- HERO -->
+        <section class="relative overflow-hidden pt-16 pb-24 lg:pt-20 lg:pb-32 bg-white glow">
+            <div class="orbit-ring w-[600px] h-[600px] -top-64 -right-64 hidden lg:block"></div>
+            <div class="orbit-ring w-[420px] h-[420px] -top-32 -right-32 hidden lg:block"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-7 text-center lg:text-left">
+                        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold bg-brand-orange/10 text-brand-orange uppercase tracking-wider">🌍 Any Country. Any Continent. The Whole World.</span>
+                        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.08]">Put Your Business In Front of Real People, On Purpose.</h1>
+                        <p class="text-lg text-slate-500 max-w-2xl mx-auto lg:mx-0 leading-relaxed">AdOrbit is a self-serve advertising network built for businesses who want results without agencies, retainers, or minimum spends. Pick your niche, choose a video, banner, social post, or classified format, set exactly how far you want it to reach, and pay once — instantly, in your own currency.</p>
+                        <p class="text-base text-slate-500 max-w-2xl mx-auto lg:mx-0 leading-relaxed">No creative team? No problem. Describe your product and our team will build the ad for you — you approve it before a single person sees it.</p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <button onclick="toggleAuthModal('register')" class="w-full sm:w-auto px-8 py-4 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl text-center shadow-lg shadow-brand-orange/20 transition-all">Launch Your First Campaign</button>
+                            <a href="#pricing" class="w-full sm:w-auto px-8 py-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-center transition-all">See Pricing</a>
+                        </div>
+                        <div class="flex items-center justify-center lg:justify-start gap-8 pt-4 text-sm text-slate-500">
+                            <span><strong class="text-slate-900">5+</strong> countries live</span>
+                            <span><strong class="text-slate-900">7</strong> currencies</span>
+                            <span><strong class="text-slate-900">Instant</strong> mobile money checkout</span>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block lg:col-span-5 relative">
+                        <div class="relative w-full h-[420px] bg-slate-900 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden flex flex-col p-6">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                                </div>
+                                <span class="text-xs font-medium text-slate-500">adorbit.app/dashboard</span>
+                            </div>
+                            <div class="space-y-4 flex-1">
+                                <div class="p-4 bg-slate-800/70 rounded-xl border border-slate-700">
+                                    <div class="text-xs text-slate-400 uppercase font-semibold">Campaign</div>
+                                    <div class="text-lg font-bold text-white">Summer Sneaker Drop</div>
+                                    <div class="text-xs text-brand-green font-medium mt-1">● Active · Targeting: Worldwide</div>
+                                </div>
+                                <div class="p-4 bg-slate-800/70 rounded-xl border border-slate-700 flex items-center justify-between">
+                                    <div>
+                                        <div class="text-xs text-slate-400 uppercase font-semibold">Views Delivered</div>
+                                        <div class="text-xl font-bold text-white">12,480 / 20,000</div>
+                                    </div>
+                                    <span class="px-3 py-1 bg-brand-orange/20 text-brand-orange text-xs font-bold rounded-full">62%</span>
+                                </div>
+                                <div class="p-4 bg-slate-800/70 rounded-xl border border-slate-700">
+                                    <div class="text-xs text-slate-400 uppercase font-semibold">Spend So Far</div>
+                                    <div class="text-xl font-bold text-white">2,496,000 UGX</div>
+                                </div>
+                            </div>
+                            <div class="absolute -bottom-10 -right-10 w-40 h-40 rounded-full border border-brand-orange/20"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section id="how-it-works" class="py-20 bg-slate-100 border-y border-slate-200/60">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-xs font-bold text-brand-orange uppercase tracking-wider">How It Works</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">From Idea to Live Campaign in Four Steps</h2>
+                </div>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-bold flex items-center justify-center">1</div>
+                        <h3 class="font-bold text-slate-900">Pick your category & format</h3>
+                        <p class="text-sm text-slate-500">Tell us what you sell and how you want to show up — a video, a banner, a social post, or a classified listing.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-bold flex items-center justify-center">2</div>
+                        <h3 class="font-bold text-slate-900">Choose your reach</h3>
+                        <p class="text-sm text-slate-500">Target one country, an entire continent, or the whole world — your call.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-bold flex items-center justify-center">3</div>
+                        <h3 class="font-bold text-slate-900">Bring content, or let us build it</h3>
+                        <p class="text-sm text-slate-500">Upload your own creative, or describe your product and our team produces it — you approve before it goes live.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-brand-orange text-white font-bold flex items-center justify-center">4</div>
+                        <h3 class="font-bold text-slate-900">Pay once, watch it run</h3>
+                        <p class="text-sm text-slate-500">Instant mobile money or card checkout. Track views, clicks, and spend live from your dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FORMATS -->
+        <section id="formats" class="py-20 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+                <div class="text-center max-w-2xl mx-auto space-y-3">
+                    <span class="text-xs font-bold text-brand-orange uppercase tracking-wider">Ad Formats</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Four Ways to Reach Your Audience</h2>
+                    <p class="text-slate-500">Mix and match — most advertisers run more than one format at once.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/80 space-y-3">
+                        <div class="text-xs font-bold text-slate-400 uppercase tracking-wider">Classified</div>
+                        <h3 class="text-lg font-bold text-slate-900">Classified Listing</h3>
+                        <p class="text-slate-500 text-sm">A flat weekly placement — ideal for one-off promotions and local announcements.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/80 space-y-3">
+                        <div class="text-xs font-bold text-blue-500 uppercase tracking-wider">Performance</div>
+                        <h3 class="text-lg font-bold text-slate-900">Banner (CPC)</h3>
+                        <p class="text-slate-500 text-sm">Pay only when someone clicks through to your site or storefront.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/80 space-y-3">
+                        <div class="text-xs font-bold text-brand-green uppercase tracking-wider">Guaranteed Views</div>
+                        <h3 class="text-lg font-bold text-slate-900">Video Ad (CPV)</h3>
+                        <p class="text-slate-500 text-sm">A secure, non-skippable 30-second watch, verified before you're charged.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/80 space-y-3">
+                        <div class="text-xs font-bold text-indigo-500 uppercase tracking-wider">Organic Reach</div>
+                        <h3 class="text-lg font-bold text-slate-900">Social Post</h3>
+                        <p class="text-slate-500 text-sm">Real creators post your content to their own audience and share proof before you pay out.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section class="py-16 bg-slate-100 border-y border-slate-200/60">
+            <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Built for Every Kind of Business</h2>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">👗 Fashion</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">🍔 Food & Drink</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">💄 Beauty</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">📱 Tech</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">🏋️ Fitness</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">💰 Finance</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">🎬 Entertainment</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">🎓 Education</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">✈️ Travel</span>
+                    <span class="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700">🚗 Automotive</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING -->
+        <section id="pricing" class="py-20 bg-white">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10">
+                <div class="space-y-3 max-w-3xl mx-auto">
+                    <span class="text-xs font-bold text-brand-orange uppercase tracking-wider">Simple, Transparent Pricing</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">One Rate Per Format, In Any Currency</h2>
+                    <p class="text-slate-500">Prices are set in Ugandan Shillings and converted automatically to KES, TZS, RWF, ZAR, USD, or EUR at checkout — no separate price lists to compare.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-slate-900">Classified Ad</h3>
+                        <p class="text-slate-400 text-sm">Flat rate, per week.</p>
+                        <div class="pt-4 border-t border-slate-100 text-2xl font-extrabold text-slate-950">7,500 <span class="text-sm font-semibold text-slate-400">UGX</span></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-slate-900">Banner (CPC)</h3>
+                        <p class="text-slate-400 text-sm">Per click.</p>
+                        <div class="pt-4 border-t border-slate-100 text-2xl font-extrabold text-slate-950">112 <span class="text-sm font-semibold text-slate-400">UGX</span></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-slate-900">Video Ad (CPV)</h3>
+                        <p class="text-slate-400 text-sm">Per guaranteed 30s view.</p>
+                        <div class="pt-4 border-t border-slate-100 text-2xl font-extrabold text-slate-950">200 <span class="text-sm font-semibold text-slate-400">UGX</span></div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-slate-900">Social Post</h3>
+                        <p class="text-slate-400 text-sm">Flat rate, per post.</p>
+                        <div class="pt-4 border-t border-slate-100 text-2xl font-extrabold text-slate-950">20,000 <span class="text-sm font-semibold text-slate-400">UGX</span></div>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-500">Need us to create your content? Add 50% to the rate above — you'll review and approve it before it goes live.</p>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="py-20 bg-slate-100 border-t border-slate-200/60">
+            <div class="max-w-3xl mx-auto px-4 space-y-8">
+                <h2 class="text-3xl font-extrabold text-slate-900 text-center">Common Questions</h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
+                        <h3 class="font-bold text-slate-900">Do I need my own video or graphics?</h3>
+                        <p class="text-sm text-slate-500 mt-1">No. Choose "generate for me" during setup, describe your product, and our team builds it. You approve it before it's shown to anyone.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
+                        <h3 class="font-bold text-slate-900">How do I pay?</h3>
+                        <p class="text-sm text-slate-500 mt-1">Instantly, by mobile money or card, in whichever of our seven supported currencies you choose. There's no wallet top-up — you pay per campaign.</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
+                        <h3 class="font-bold text-slate-900">Who actually sees my ad?</h3>
+                        <p class="text-sm text-slate-500 mt-1">Real people on our OrbitEarn network who've verified a TikTok, YouTube, or X account matching your business category and target location.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-20 bg-brand-dark text-center">
+            <div class="max-w-2xl mx-auto px-4 space-y-6">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Ready to Put Your Business in Orbit?</h2>
+                <p class="text-slate-400">Create your account and launch your first campaign in minutes.</p>
+                <button onclick="toggleAuthModal('register')" class="px-8 py-4 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg transition-all">Get Started Free</button>
+            </div>
+        </section>
+    </main>
+
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-white w-full max-w-md p-8 rounded-3xl shadow-2xl relative border border-slate-100">
+            <button onclick="closeAuthModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <div id="auth-login-view" class="space-y-6">
+                <h3 class="text-2xl font-extrabold">Sign In</h3>
+                <form id="login-form" class="space-y-4" onsubmit="handleAuthSubmit(event, 'login')">
+                    <input type="email" id="login-email" placeholder="Email Address" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="password" id="login-password" placeholder="Password" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <button type="submit" class="w-full h-12 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg">Sign In</button>
+                </form>
+                <div class="text-sm text-slate-500 text-center">Don't have an account? <button onclick="toggleAuthModal('register')" class="text-brand-orange font-bold">Register here</button></div>
+            </div>
+            <div id="auth-register-view" class="space-y-6 hidden">
+                <h3 class="text-2xl font-extrabold">Create Account</h3>
+                <form id="register-form" class="space-y-4" onsubmit="handleAuthSubmit(event, 'register')">
+                    <input type="text" id="register-username" placeholder="Username" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="email" id="register-email" placeholder="Email Address" required class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="password" id="register-password" placeholder="Password (min 8 characters)" required minlength="8" class="w-full h-12 bg-slate-50 border border-slate-200 rounded-xl px-4 focus:ring-2 focus:ring-brand-orange outline-none">
+                    <input type="hidden" id="register-role" value="advertiser">
+                    <button type="submit" class="w-full h-12 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg">Register Account</button>
+                </form>
+                <div class="text-sm text-slate-500 text-center">Already have an account? <button onclick="toggleAuthModal('login')" class="text-brand-orange font-bold">Sign In here</button></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 border-t border-slate-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <img src="assets/logo.svg" alt="AdOrbit" class="h-8 brightness-0 invert">
+                <p class="text-sm text-slate-500">Self-serve advertising that reaches real people, in any country, on any budget.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-3">Product</h4>
+                <ul class="space-y-2 text-sm text-slate-500">
+                    <li><a href="#how-it-works" class="hover:text-white">How It Works</a></li>
+                    <li><a href="#formats" class="hover:text-white">Ad Formats</a></li>
+                    <li><a href="#pricing" class="hover:text-white">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-3">Twin Platform</h4>
+                <ul class="space-y-2 text-sm text-slate-500">
+                    <li><a href="https://orbitearn.vercel.app" class="hover:text-white">OrbitEarn — Earn as a Creator</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-3">Company</h4>
+                <ul class="space-y-2 text-sm text-slate-500">
+                    <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-500 text-sm mt-12 pt-8 border-t border-slate-800"><p>&copy; 2026 AdOrbit. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'https://adorbit-backend.onrender.com'; // <-- replace with your real Render service URL
+
+        function toggleAuthModal(mode) {
+            document.getElementById('auth-modal').classList.remove('hidden');
+            document.getElementById('auth-login-view').classList.toggle('hidden', mode !== 'login');
+            document.getElementById('auth-register-view').classList.toggle('hidden', mode !== 'register');
+        }
+        function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); }
+
+        async function handleAuthSubmit(event, endpoint) {
+            event.preventDefault();
+            const bodyData = {};
+            if (endpoint === 'login') {
+                bodyData.email = document.getElementById('login-email').value;
+                bodyData.password = document.getElementById('login-password').value;
+            } else {
+                bodyData.username = document.getElementById('register-username').value;
+                bodyData.email = document.getElementById('register-email').value;
+                bodyData.password = document.getElementById('register-password').value;
+                bodyData.role = document.getElementById('register-role').value;
+            }
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/auth/${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bodyData)
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    if (endpoint === 'login') {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        alert('Registration successful! Please sign in.');
+                        toggleAuthModal('login');
+                    }
+                } else {
+                    alert(data.error || 'Authentication error.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection to auth servers failed.');
+            }
+        }
+
+        window.addEventListener('load', () => {
+            if (localStorage.getItem('token')) {
+                const btn = document.getElementById('auth-nav-btn');
+                btn.setAttribute('onclick', "window.location.href='dashboard.html'");
+                btn.innerText = 'Go to Dashboard';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advertiser Dashboard - AdOrbit</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brand: { orange: '#FF5A00', green: '#00B25C', dark: '#0F172A' } }, fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans antialiased">
+
+    <header class="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="index.html"><img src="assets/logo.svg" alt="AdOrbit" class="h-8 brightness-0 invert"></a>
+            <div class="flex items-center gap-4">
+                <span id="welcome-user-text" class="text-sm text-slate-400 hidden sm:inline">Loading...</span>
+                <button onclick="handleLogOut()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold rounded-xl border border-slate-700 transition-all">Log Out</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div>
+                <h1 class="text-3xl font-extrabold text-white">Advertiser Dashboard</h1>
+                <p class="text-slate-400 text-sm">Launch a campaign and pay instantly — no wallet top-up needed.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+
+                <div class="lg:col-span-7 bg-slate-800/40 p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-5">
+                    <h2 class="text-xl font-bold text-white">New Campaign</h2>
+
+                    <form id="campaign-form" class="space-y-4" onsubmit="handleCampaignSubmit(event)">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide mb-2">Business / Product Category</label>
+                                <select id="form-category" class="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl px-4 text-white focus:ring-2 focus:ring-brand-orange outline-none">
+                                    <option value="fashion">Fashion</option>
+                                    <option value="food">Food & Drink</option>
+                                    <option value="beauty">Beauty</option>
+                                    <option value="tech">Tech</option>
+                                    <option value="fitness">Fitness</option>
+                                    <option value="finance">Finance</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="education">Education</option>
+                                    <option value="travel">Travel</option>
+                                    <option value="automotive">Automotive</option>
+                                    <option value="general">General / Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide mb-2">Ad Format</label>
+                                <select id="form-campaign-type" class="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl px-4 text-white focus:ring-2 focus:ring-brand-orange outline-none">
+                                    <option value="classified">Classified Ad (flat, per week)</option>
+                                    <option value="banner_cpc">Banner (cost per click)</option>
+                                    <option value="video_cpv" selected>Video Ad (cost per view)</option>
+                                    <option value="social_flat">Social Post (flat)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide mb-2">Campaign Title</label>
+                            <input type="text" id="form-title" placeholder="e.g. Premium Fast Charging Cables" required class="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl px-4 text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-orange outline-none">
+                        </div>
+
+                        <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-3">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide">Where should this reach?</label>
+                            <div class="flex gap-2">
+                                <button type="button" id="scope-btn-country" onclick="setScope('country')" class="scope-btn flex-1 h-10 rounded-lg text-sm font-semibold bg-brand-orange text-white">Country</button>
+                                <button type="button" id="scope-btn-continent" onclick="setScope('continent')" class="scope-btn flex-1 h-10 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300">Continent</button>
+                                <button type="button" id="scope-btn-world" onclick="setScope('world')" class="scope-btn flex-1 h-10 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300">Whole World</button>
+                            </div>
+                            <select id="form-country" class="w-full h-11 bg-slate-900 border border-slate-700 rounded-lg px-3 text-white">
+                                <option>Uganda</option><option>Kenya</option><option>Tanzania</option><option>Rwanda</option><option>South Africa</option>
+                            </select>
+                            <select id="form-continent" class="w-full h-11 bg-slate-900 border border-slate-700 rounded-lg px-3 text-white hidden">
+                                <option>Africa</option>
+                            </select>
+                            <p id="scope-world-note" class="text-xs text-slate-500 hidden">Your campaign will be shown to matching earners worldwide.</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide mb-2">Currency</label>
+                                <select id="form-currency" class="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl px-4 text-white focus:ring-2 focus:ring-brand-orange outline-none">
+                                    <option value="UGX">UGX</option><option value="KES">KES</option><option value="TZS">TZS</option>
+                                    <option value="RWF">RWF</option><option value="ZAR">ZAR</option><option value="USD">USD</option><option value="EUR">EUR</option>
+                                </select>
+                            </div>
+                            <div id="units-field-wrapper">
+                                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide mb-2">Target Units (Clicks/Views)</label>
+                                <input type="number" id="form-units" value="100" min="1" class="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl px-4 text-white focus:ring-2 focus:ring-brand-orange outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide mb-2">Destination Link</label>
+                            <input type="url" id="form-destination" placeholder="https://wa.me/... or your website" class="w-full h-12 bg-slate-900 border border-slate-700 rounded-xl px-4 text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-orange outline-none">
+                        </div>
+
+                        <div class="bg-slate-900/60 p-4 rounded-2xl border border-slate-800 space-y-3">
+                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wide">Content</label>
+                            <div class="flex gap-2">
+                                <button type="button" id="source-btn-own" onclick="setContentSource('own')" class="source-btn flex-1 h-10 rounded-lg text-sm font-semibold bg-brand-orange text-white">I'll upload my own</button>
+                                <button type="button" id="source-btn-generated" onclick="setContentSource('generated')" class="source-btn flex-1 h-10 rounded-lg text-sm font-semibold bg-slate-800 text-slate-300">Generate it for me (+50%)</button>
+                            </div>
+                            <div id="own-content-field">
+                                <div class="border-2 border-dashed border-slate-700 hover:border-brand-orange rounded-2xl p-6 text-center cursor-pointer relative transition-all group">
+                                    <input type="file" id="form-media-file" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onchange="previewUploadName(this)">
+                                    <div class="text-sm font-semibold text-slate-300" id="upload-label-text">Select a media file to upload</div>
+                                    <div class="text-xs text-slate-500 mt-1">PNG, JPG, or MP4 (Max 10MB)</div>
+                                </div>
+                            </div>
+                            <div id="generated-content-field" class="hidden">
+                                <textarea id="form-generation-brief" rows="4" placeholder="Tell us about your product or business — what it is, who it's for, and what tone you want (at least 15 characters)." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:ring-2 focus:ring-brand-orange outline-none"></textarea>
+                                <p class="text-xs text-slate-500 mt-1">Our team will create your video or post, then send it back for your approval before it goes live.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-950/40 p-5 rounded-2xl border border-blue-900/50">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-semibold text-slate-300">Estimated Total Cost</span>
+                                <span class="text-xl font-black text-brand-orange" id="cost-preview">—</span>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full h-14 bg-brand-orange hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg transition-all">Continue to Payment</button>
+                    </form>
+                </div>
+
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="bg-slate-800/40 p-6 rounded-3xl border border-slate-800 space-y-4">
+                        <h2 class="text-lg font-bold text-white">My Campaigns</h2>
+                        <div class="space-y-3" id="campaign-list"><p class="text-sm text-slate-500">Loading...</p></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Content review modal -->
+    <div id="review-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
+        <div class="bg-slate-900 w-full max-w-lg p-8 rounded-3xl shadow-2xl border border-slate-800 space-y-4">
+            <h3 class="text-xl font-bold text-white">Review Your Content</h3>
+            <div id="review-media-preview" class="rounded-xl overflow-hidden bg-black"></div>
+            <textarea id="review-feedback" rows="3" placeholder="If you're requesting changes, tell us what to fix..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-3 text-white placeholder-slate-500"></textarea>
+            <div class="flex gap-3">
+                <button onclick="submitReview(true)" class="flex-1 h-12 bg-brand-green hover:bg-green-600 text-white font-bold rounded-xl">Approve & Go Live</button>
+                <button onclick="submitReview(false)" class="flex-1 h-12 bg-slate-700 hover:bg-slate-600 text-white font-bold rounded-xl">Request Changes</button>
+            </div>
+            <button onclick="closeReviewModal()" class="w-full text-sm text-slate-500 hover:text-slate-300">Cancel</button>
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-500 text-sm"><p>&copy; 2026 AdOrbit. All rights reserved.</p></div>
+    </footer>
+
+    <script>
+        const API_BASE_URL = 'https://adorbit-backend.onrender.com'; // <-- replace with your real Render service URL
+
+        const BASE_RATES_UGX = { classified: 7500, banner_cpc: 112, video_cpv: 200, social_flat: 20000 };
+        const GENERATED_MULTIPLIER = 1.5;
+        const RATE_PER_UGX = { UGX: 1, KES: 0.0347, TZS: 0.6935, RWF: 0.3629, ZAR: 0.0049, USD: 0.00027, EUR: 0.00025 };
+        const ZERO_DECIMAL = new Set(['UGX', 'TZS', 'RWF']);
+        const FLAT_TYPES = ['classified', 'social_flat'];
+
+        function convert(ugx, currency) {
+            const raw = ugx * RATE_PER_UGX[currency];
+            return Number(raw.toFixed(ZERO_DECIMAL.has(currency) ? 0 : 2));
+        }
+
+        let currentUser = null;
+        let currentScope = 'country';
+        let currentSource = 'own';
+        let reviewingCampaignId = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            const storedUser = localStorage.getItem('user');
+            if (!token || !storedUser) { alert('Please log in first.'); window.location.href = 'index.html'; return; }
+            currentUser = JSON.parse(storedUser);
+            if (currentUser.role !== 'advertiser') { alert('This dashboard is for advertiser accounts.'); window.location.href = 'index.html'; return; }
+            document.getElementById('welcome-user-text').innerText = `Welcome, ${currentUser.username}`;
+            loadCampaigns();
+            updateCostPreview();
+            ['form-campaign-type', 'form-currency', 'form-units'].forEach((id) => {
+                document.getElementById(id).addEventListener('input', updateCostPreview);
+                document.getElementById(id).addEventListener('change', updateCostPreview);
+            });
+        });
+
+        function handleLogOut() { localStorage.clear(); window.location.href = 'index.html'; }
+
+        function setScope(scope) {
+            currentScope = scope;
+            ['country', 'continent', 'world'].forEach((s) => {
+                document.getElementById(`scope-btn-${s}`).className = `scope-btn flex-1 h-10 rounded-lg text-sm font-semibold ${s === scope ? 'bg-brand-orange text-white' : 'bg-slate-800 text-slate-300'}`;
+            });
+            document.getElementById('form-country').classList.toggle('hidden', scope !== 'country');
+            document.getElementById('form-continent').classList.toggle('hidden', scope !== 'continent');
+            document.getElementById('scope-world-note').classList.toggle('hidden', scope !== 'world');
+        }
+
+        function setContentSource(source) {
+            currentSource = source;
+            document.getElementById('source-btn-own').className = `source-btn flex-1 h-10 rounded-lg text-sm font-semibold ${source === 'own' ? 'bg-brand-orange text-white' : 'bg-slate-800 text-slate-300'}`;
+            document.getElementById('source-btn-generated').className = `source-btn flex-1 h-10 rounded-lg text-sm font-semibold ${source === 'generated' ? 'bg-brand-orange text-white' : 'bg-slate-800 text-slate-300'}`;
+            document.getElementById('own-content-field').classList.toggle('hidden', source !== 'own');
+            document.getElementById('generated-content-field').classList.toggle('hidden', source !== 'generated');
+            updateCostPreview();
+        }
+
+        function previewUploadName(input) {
+            document.getElementById('upload-label-text').innerText = input.files[0] ? input.files[0].name : 'Select a media file to upload';
+        }
+
+        function updateCostPreview() {
+            const type = document.getElementById('form-campaign-type').value;
+            const currency = document.getElementById('form-currency').value;
+            const isFlat = FLAT_TYPES.includes(type);
+            document.getElementById('units-field-wrapper').style.display = isFlat ? 'none' : 'block';
+            const units = isFlat ? 1 : Math.max(1, parseInt(document.getElementById('form-units').value, 10) || 0);
+            const baseUgx = BASE_RATES_UGX[type] * (currentSource === 'generated' ? GENERATED_MULTIPLIER : 1);
+            const unitCost = convert(baseUgx, currency);
+            const total = unitCost * units;
+            document.getElementById('cost-preview').innerText = total.toLocaleString(undefined, { maximumFractionDigits: 2 }) + ' ' + currency;
+        }
+
+        async function loadCampaigns() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/campaigns/mine`, {
+                    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+                });
+                const data = await response.json();
+                const list = document.getElementById('campaign-list');
+                if (!response.ok || !data.campaigns.length) {
+                    list.innerHTML = '<p class="text-sm text-slate-500">No campaigns yet.</p>';
+                    return;
+                }
+                list.innerHTML = data.campaigns.map((c) => `
+                    <div class="p-4 bg-slate-900 rounded-xl border border-slate-800 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <div class="font-bold text-sm text-slate-200">${c.title}</div>
+                            <span class="px-2 py-0.5 ${statusBadgeClass(c.status)} text-xs font-semibold rounded-full">${c.status.replace(/_/g, ' ').toUpperCase()}</span>
+                        </div>
+                        <div class="text-xs text-slate-500">${c.total_units} units · ${Number(c.remaining_budget).toLocaleString()} ${c.currency} remaining</div>
+                        ${c.status === 'pending_customer_approval' ? `<button onclick="openReviewModal(${c.id}, '${c.generated_media_url || ''}')" class="w-full h-9 bg-brand-green hover:bg-green-600 text-white text-xs font-bold rounded-lg mt-1">Review Content</button>` : ''}
+                        ${c.revision_notes ? `<div class="text-xs text-yellow-400">Your note: ${c.revision_notes}</div>` : ''}
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function statusBadgeClass(status) {
+            if (status === 'active') return 'bg-green-500/20 text-green-400';
+            if (status === 'unpaid') return 'bg-yellow-500/20 text-yellow-400';
+            if (status === 'pending_content') return 'bg-blue-500/20 text-blue-400';
+            if (status === 'pending_customer_approval') return 'bg-purple-500/20 text-purple-400';
+            if (status === 'completed') return 'bg-slate-500/20 text-slate-300';
+            return 'bg-red-500/20 text-red-400';
+        }
+
+        function openReviewModal(campaignId, mediaUrl) {
+            reviewingCampaignId = campaignId;
+            const preview = document.getElementById('review-media-preview');
+            preview.innerHTML = mediaUrl
+                ? (mediaUrl.match(/\.(mp4|mov)$/i)
+                    ? `<video src="${API_BASE_URL}${mediaUrl}" class="w-full" controls></video>`
+                    : `<img src="${API_BASE_URL}${mediaUrl}" class="w-full">`)
+                : '<p class="text-sm text-slate-500 p-4">No preview available.</p>';
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+        function closeReviewModal() { document.getElementById('review-modal').classList.add('hidden'); reviewingCampaignId = null; }
+
+        async function submitReview(approve) {
+            if (!reviewingCampaignId) return;
+            const feedback = document.getElementById('review-feedback').value;
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/campaigns/${reviewingCampaignId}/review-content`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                    body: JSON.stringify({ approve, feedback })
+                });
+                const data = await response.json();
+                alert(data.message || data.error);
+                closeReviewModal();
+                loadCampaigns();
+            } catch (err) {
+                console.error(err);
+                alert('Failed to submit review.');
+            }
+        }
+
+        async function handleCampaignSubmit(event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            formData.append('campaignType', document.getElementById('form-campaign-type').value);
+            formData.append('title', document.getElementById('form-title').value);
+            formData.append('businessCategory', document.getElementById('form-category').value);
+            formData.append('targetScope', currentScope);
+            formData.append('targetCountry', document.getElementById('form-country').value);
+            formData.append('targetContinent', document.getElementById('form-continent').value);
+            formData.append('currency', document.getElementById('form-currency').value);
+            formData.append('totalUnits', document.getElementById('form-units').value);
+            formData.append('destinationUrl', document.getElementById('form-destination').value);
+            formData.append('contentSource', currentSource);
+
+            if (currentSource === 'generated') {
+                formData.append('generationBrief', document.getElementById('form-generation-brief').value);
+            } else {
+                const fileField = document.getElementById('form-media-file');
+                if (fileField.files[0]) formData.append('mediaFile', fileField.files[0]);
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/campaigns/create`, {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                    body: formData
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert(`Campaign created. You'll be redirected to pay ${data.totalCost}.`);
+                    window.location.href = data.checkoutLink;
+                } else {
+                    alert(data.error || 'Failed to launch campaign.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Connection error occurred while processing campaign upload.');
+            }
+        }
+    </script>
+</body>
+</html>
